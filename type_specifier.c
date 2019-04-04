@@ -6,54 +6,98 @@
 /*   By: mrolfe <mrolfe@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/30 16:27:55 by mrolfe            #+#    #+#             */
-/*   Updated: 2019/03/30 17:26:12 by mrolfe           ###   ########.fr       */
+/*   Updated: 2019/04/04 14:19:18 by mrolfe           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char    type_specifier(char c) // что еще передается
+#include "ft_strdup.c"
+#include "ft_strnew.c"
+#include "ft_strlen.c"
+
+char    *type_specifier(t_spec *spec, va_list *ap)
 {
-    if (format[*i] == 'c')
-        type_c(char *format);
-    if (format[*i] == 's')
-        type_s(char *format);
-    if (format[*i] == 'p')
-        type_p(char *format);
-    if (format[*i] == 'd')
-        type_d(char *format);
-    if (format[*i] == 'i')
-        type_i(char *format);
-    if (format[*i] == 'o')
-        type_o(char *format);
-    if (format[*i] == 'u')
-        type_u(char *format);
-    if (format[*i] == 'x')
-        type_x(char *format);
-    if (format[*i] == 'X')
-        type_X(char *format);
+	char	*res;
+
+	if (spec->type == 'c')
+		type_c(res, ap);
+	if (spec->type == 's')
+		type_s(res, ap);
+	if (spec->type == 'p')
+		type_p(res, ap);
+	if (spec->type == 'd')
+		type_d(res, ap);
+	if (spec->type == 'f')
+		type_f(res, ap);
+	if (spec->type == 'i')
+		type_i(res, ap);
+	return ();
 }
 
-char    *type_c(char *to_print, int   *ret)
+char *type_specifier(t_spec *spec, va_list *ap)
 {
-    ft_strcpy(ret, to_print);
-    return (*ret);
+	int	nb;
+	nb = va_atg(ap, int);
+	if (spec->type == 'o')
+		res = ft_itoa_base(nb, 8);
+	if (spec->type == 'u')
+		res = ft_itoa_base(nb, 10);
+	if (spec->type == 'x')
+		res = ft_itoa_base(nb, 16);
+	if (spec->type == 'X')
+		res = ft_itoa_base(nb, 16);
+	return (res);
+
 }
 
-char    *type_i(char *to_print, int   *ret)
+char    *type_c(char *res, va_list *ap)
 {
-    ft_itoa();
+	char	ch;
+
+	//res = ft_strnew(1);
+	res = (char*)malloc(2 * sizeof(char));
+	ch = va_arg(ap, char);
+	res[0] = ch;
+	res[1] = '\0';
+	return (res);
 }
 
-// функция для того, чтобы выяснить, что конкретно из формат нужно печатать
-char    *value_to_print(int argc, char  *argv, char *format)
+char    *type_s(char *res, va_list *ap)
 {
-    int i;
-    char to_print;
+	char	*s;
+	int		len;
 
-    i = 0;
-    while(argv[1][i])
-    {
-        to_print = argv[1][i];
-        i++;
-    }
-    return (*to_print);
+    len = (int)ft_strlen(char *res);
+    res = (char*)malloc((len + 1) * sizeof(char));
+    s = va_arg(ap, char);
+    ft_strcpy(res, s);
+	return (res);
 }
+
+char	*type_p(char *res, va_list *ap)
+{
+	int	nb;
+
+	nb = va_atg(ap, int);
+	res = ft_itoa_base(nb, 16);
+	return (res);
+}
+
+char	*type_d(char *res, va_list *ap)
+{
+
+}
+
+char	*type_f(char *res, va_list *ap)
+{
+
+}
+
+char    *type_i(char *res, va_list *ap)
+{
+	int	nb;
+
+	nb = va_atg(ap, int);
+	res = ft_itoa(nb);
+	return (res);
+}
+
