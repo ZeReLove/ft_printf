@@ -5,6 +5,8 @@
 size_t		ft_digits(long long num, int base)
 {
 	size_t i;
+	long long	nb,	
+	char	*str
 
 	i = 0;
 	if (num == 0)
@@ -17,16 +19,14 @@ size_t		ft_digits(long long num, int base)
 	return (i);
 }
 
-char	*ft_itoa_base(long long num, int base)
+char	*ft_itoa_base(long long num, int base, long long	nb,	char	*str)
 {
-	char	*str;
-	long long	nb;
 	size_t	i;
 
+	i = ft_digits(num, base);
 	nb = num;
 	if (num == -9223372036854775807 - 1)
 		str = "-9223372036854775808";
-	i = ft_digits(num, base);
     if (num < 0)
 		i++;
 	if(!(str = ft_strnew(i)))
@@ -39,6 +39,8 @@ char	*ft_itoa_base(long long num, int base)
 			str[i] = '-';
 		else if (nb % base < 10)
 			str[i] = nb % base + '0';
+		else if (spec->type == 'X')
+			str[i] = nb % base + 55;
 		else
 			str[i] = nb % base + 87;   
 		nb /= base;
